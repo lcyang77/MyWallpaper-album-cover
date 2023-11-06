@@ -1,3 +1,4 @@
+![wallpaper](https://github.com/lcyang77/MyWallpaper-album-cover-ArtfulWall/assets/96232971/7d6f414b-d935-4a24-9e4f-8096ac50544f)
 [https://youtu.be/LIOjDCaVK_E](https://youtu.be/LIOjDCaVK_E?si=Uq6xN3RPZ0rspWP4)
 # 壁纸自动更新程序
 
