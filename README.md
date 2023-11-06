@@ -1,5 +1,40 @@
 ![wallpaper](https://github.com/lcyang77/MyWallpaper-album-cover-ArtfulWall/assets/96232971/7d6f414b-d935-4a24-9e4f-8096ac50544f)
 [https://youtu.be/LIOjDCaVK_E](https://youtu.be/LIOjDCaVK_E?si=Uq6xN3RPZ0rspWP4)
+# Wallpaper Auto-Updater Program
+
+## Overview
+This is an automatic desktop wallpaper updating program that runs in the background on Windows systems and randomly changes the desktop wallpaper based on the user's configuration file. 
+It provides a user interface through a system tray icon, making it convenient for users to access the program's features.
+
+## Key Features
+- Runs in the system tray, saving desktop space.
+- Supports auto-start with system boot.
+- Allows modification of wallpaper update settings through a configuration editor.
+- Enables management of wallpaper resources via an image folder.
+- Features backup and restoration of the configuration file to prevent loss of settings.
+- Utilizes the `ImageManager` class to manage image resources, supporting common image formats.
+- Automatically updates the wallpaper based on configured time intervals.
+- Randomly selects wallpapers for updates, adding variety to the desktop.
+
+## Usage
+1. Right-click the system tray icon to open the menu.
+2. Select "Auto-Start at Boot" to enable or disable the program's auto-start feature.
+3. Choose "Edit Configuration" to modify the wallpaper update settings.
+4. Select "Open Image Folder" to add or remove wallpaper images.
+5. Choose "Exit" to close the program.
+
+## System Requirements
+- Windows operating system.
+- .NET runtime environment.
+
+## Installation Instructions
+1. Download the program installation package.
+2. Unzip and run the installer.
+3. Follow the steps in the installation wizard to complete the installation.
+4. Make sure it is installed on your computer. NET 7
+
+
+
 # 壁纸自动更新程序
 
 ## 程序概述
@@ -31,37 +66,3 @@
 2. 解压并运行安装程序。
 3. 按照安装向导步骤完成安装。
 4. 请确保电脑中安装了.NET 7
-
-
-
-# Wallpaper Auto-Updater Program
-
-## Overview
-This is an automatic desktop wallpaper updating program that runs in the background on Windows systems and randomly changes the desktop wallpaper based on the user's configuration file. It provides a user interface through a system tray icon, making it convenient for users to access the program's features.
-
-## Key Features
-- Runs in the system tray, saving desktop space.
-- Supports auto-start with system boot.
-- Allows modification of wallpaper update settings through a configuration editor.
-- Enables management of wallpaper resources via an image folder.
-- Features backup and restoration of the configuration file to prevent loss of settings.
-- Utilizes the `ImageManager` class to manage image resources, supporting common image formats.
-- Automatically updates the wallpaper based on configured time intervals.
-- Randomly selects wallpapers for updates, adding variety to the desktop.
-
-## Usage
-1. Right-click the system tray icon to open the menu.
-2. Select "Auto-Start at Boot" to enable or disable the program's auto-start feature.
-3. Choose "Edit Configuration" to modify the wallpaper update settings.
-4. Select "Open Image Folder" to add or remove wallpaper images.
-5. Choose "Exit" to close the program.
-
-## System Requirements
-- Windows operating system.
-- .NET runtime environment.
-
-## Installation Instructions
-1. Download the program installation package.
-2. Unzip and run the installer.
-3. Follow the steps in the installation wizard to complete the installation.
-4. Make sure it is installed on your computer. NET 7
