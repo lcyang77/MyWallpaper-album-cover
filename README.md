@@ -29,6 +29,7 @@
 1. 下载程序安装包。
 2. 解压并运行安装程序。
 3. 按照安装向导步骤完成安装。
+4. 请确保电脑中安装了.NET 7
 
 
 
@@ -62,3 +63,4 @@ This is an automatic desktop wallpaper updating program that runs in the backgro
 1. Download the program installation package.
 2. Unzip and run the installer.
 3. Follow the steps in the installation wizard to complete the installation.
+4. Make sure it is installed on your computer. NET 7
