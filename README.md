@@ -20,7 +20,8 @@ This automatic desktop wallpaper updating program runs in the background on Wind
 2. Enable or disable "Auto-Start at Boot" as needed.
 3. Modify wallpaper settings via "Edit Configuration".
 4. Manage your wallpaper images through "Open Image Folder".
-5. Exit the application using the "Exit" option.
+5. Make sure you've got plenty of pics in the image folder.
+6. Exit the application using the "Exit" option.
 
 ## System Requirements
 - Operating System: Windows
@@ -63,7 +64,8 @@ This project is licensed under the [MIT License](LICENSE). You are free to use, 
 2. 根据需要启用或禁用“开机自启动”。
 3. 通过“编辑配置”修改壁纸设置。
 4. 通过“打开图片文件夹”管理壁纸图片。
-5. 使用“退出”选项退出应用程序。
+5. 确保图片文件夹中有足够多的图片
+6. 使用“退出”选项退出应用程序。
 
 ## 系统要求
 - 操作系统：Windows
