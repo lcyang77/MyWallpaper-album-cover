@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text.Json;
@@ -12,16 +12,19 @@ using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Runtime.InteropServices;
 
+// 程序主类
 class Program
 {
-    private static NotifyIcon? trayIcon;
-    private static ToolStripMenuItem? autoStartMenuItem;
-    private static string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-    private static string appFolder = Path.Combine(appDataPath, "MyWallpaperApp");
-    private static string configPath = Path.Combine(appFolder, "config.json");
-    private static WallpaperUpdater? updater;
-    private static Icon? appIcon; // 移动到此处以保持图标的引用
+    // 变量定义区域
+    private static NotifyIcon? trayIcon; // 托盘图标变量
+    private static ToolStripMenuItem? autoStartMenuItem; // 自启动菜单项
+    private static string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData); // 应用数据路径
+    private static string appFolder = Path.Combine(appDataPath, "MyWallpaperApp"); // 应用文件夹路径
+    private static string configPath = Path.Combine(appFolder, "config.json"); // 配置文件路径
+    private static WallpaperUpdater? updater; // 壁纸更新器实例
+    private static Icon? appIcon; // 应用图标变量
 
+    // 主函数入口
     [STAThread]
     static void Main(string[] args)
     {
@@ -31,14 +34,16 @@ class Program
 
         InitializeTrayIcon();
 
+        // 检查应用文件夹是否存在，不存在则创建
         if (!Directory.Exists(appFolder))
         {
             Directory.CreateDirectory(appFolder);
         }
 
+        // 检查配置文件是否存在，不存在则尝试恢复或创建
         if (!File.Exists(configPath))
         {
-            if (!RestoreBackupConfigFile()) // 尝试恢复备份
+            if (!RestoreBackupConfigFile()) // 尝试恢复备份配置文件
             {
                 var defaultConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
                 if (File.Exists(defaultConfigPath))
@@ -55,6 +60,7 @@ class Program
 
         try
         {
+            // 读取配置文件，创建和启动 WallpaperUpdater 实例
             var configText = File.ReadAllText(configPath);
             var config = JsonSerializer.Deserialize<Configuration>(configText);
 
@@ -67,9 +73,9 @@ class Program
             ValidateConfiguration(config);
 
             // 创建 ImageManager 实例
-            ImageManager imageManager = new ImageManager(10); // Assuming max cache size is 10
+            ImageManager imageManager = new ImageManager(10); // 假设最大缓存大小为10
 
-            // 创建并启动 WallpaperUpdater
+            // 创建并启动 WallpaperUpdater 实例
             updater = new WallpaperUpdater(
                 config.FolderPath, 
                 config.DestFolder, 
@@ -78,12 +84,12 @@ class Program
                 config.Rows, 
                 config.Cols, 
                 imageManager,
-                config.MinInterval, // 从配置中读取 MinInterval
-                config.MaxInterval // 从配置中读取 MaxInterval
+                config.MinInterval, // 从配置中读取最小间隔
+                config.MaxInterval // 从配置中读取最大间隔
             );
             updater.Start();
 
-            // 配置文件读取和处理成功后备份
+            // 成功读取和处理配置文件后进行备份
             BackupConfigFile();
         }
         catch (JsonException)
@@ -98,12 +104,14 @@ class Program
         Application.Run();
     }
 
+    // 备份配置文件函数
     private static void BackupConfigFile()
     {
         string backupConfigPath = Path.Combine(appFolder, "config_backup.json");
         File.Copy(configPath, backupConfigPath, true);
     }
 
+    // 恢复备份配置文件函数
     private static bool RestoreBackupConfigFile()
     {
         string backupConfigPath = Path.Combine(appFolder, "config_backup.json");
@@ -115,6 +123,7 @@ class Program
         return false;
     }
 
+    // 初始化托盘图标函数
     private static void InitializeTrayIcon()
     {
         try
@@ -131,12 +140,14 @@ class Program
                 ContextMenuStrip = new ContextMenuStrip()
             };
 
+            // 添加菜单项
             autoStartMenuItem = new ToolStripMenuItem("开机自启动", null, ToggleAutoStart)
             {
                 Checked = IsAutoStartEnabled()
             };
             trayIcon.ContextMenuStrip.Items.Add(autoStartMenuItem);
 
+            // 其他菜单项
             trayIcon.ContextMenuStrip.Items.Add("配置编辑器", null, OpenConfigEditor);
             trayIcon.ContextMenuStrip.Items.Add("打开图片文件夹", null, OpenImageFolder);
             trayIcon.ContextMenuStrip.Items.Add("退出", null, OnExit);
@@ -147,12 +158,14 @@ class Program
         }
     }
 
+    // 打开配置编辑器函数
     private static void OpenConfigEditor(object? sender, EventArgs e)
     {
         ConfigEditorForm editor = new ConfigEditorForm(configPath);
         editor.ShowDialog();
     }
 
+    // 打开图片文件夹函数
     private static void OpenImageFolder(object? sender, EventArgs e)
     {
         if (File.Exists(configPath))
@@ -174,6 +187,7 @@ class Program
         }
     }
 
+    // 开启或关闭自启动函数
     private static void ToggleAutoStart(object? sender, EventArgs e)
     {
         bool enabled = !IsAutoStartEnabled();
@@ -181,6 +195,7 @@ class Program
         autoStartMenuItem.Checked = enabled;
     }
 
+    // 检查是否已开启自启动函数
     private static bool IsAutoStartEnabled()
     {
         using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", false))
@@ -189,6 +204,7 @@ class Program
         }
     }
 
+    // 设置自启动函数
     private static void SetAutoStart(bool enable)
     {
         using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true))
@@ -205,9 +221,10 @@ class Program
         }
     }
 
+    // 退出程序函数
     private static void OnExit(object? sender, EventArgs e)
     {
-        // Dispose of WallpaperUpdater before exiting
+        // 退出前释放 WallpaperUpdater 资源
         updater?.Dispose();
 
         // 释放图标资源
@@ -216,9 +233,10 @@ class Program
         Application.Exit();
     }
 
+    // 程序退出时的处理函数
     private static void OnProcessExit(object? sender, EventArgs e)
     {
-        // Ensure that WallpaperUpdater is disposed properly when the application exits
+        // 程序退出时确保 WallpaperUpdater 被正确释放
         updater?.Dispose();
 
         // 释放图标资源
@@ -226,7 +244,7 @@ class Program
         trayIcon?.Dispose();
     }
 
-
+    // 验证配置文件函数
     static void ValidateConfiguration(Configuration config)
     {
         if (config == null) throw new ArgumentNullException(nameof(config));
@@ -248,14 +266,17 @@ class Program
     }
 }
 
+// 配置类定义
 public class Configuration
 {
-    public string? FolderPath { get; set; }
-    public string? DestFolder { get; set; }
-    public int Width { get; set; }
-    public int Height { get; set; }
-    public int Rows { get; set; }
-    public int Cols { get; set; }
-    public int MinInterval { get; set; } = 3;  // 默认值为 3
-    public int MaxInterval { get; set; } = 10; // 默认值为 10
+    public string? FolderPath { get; set; } //图片文件夹路径
+
+    public string? DestFolder { get; set; } //壁纸文件夹路径
+    public int Width { get; set; }//壁纸宽度
+    public int Height { get; set; }//壁纸高度
+    public int Rows { get; set; }//壁纸网格行数
+    public int Cols { get; set; }//壁纸网格列数
+    public int MinInterval { get; set; } = 3;  // 更新最小时间默认值为 3
+    public int MaxInterval { get; set; } = 10; // 更新最大时间默认值为 10
+    //更新时间从MinInterval到MaxInterval之间的随机值
 }
